@@ -1,14 +1,13 @@
-
 package pl.minder.flatmanager.Model;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class Uzytkownik {
+public class User {
 
     @SerializedName("idUzytkownika")
     @Expose
-    private Integer idUzytkownika;
+    private Long idUzytkownika;
     @SerializedName("typUzytkownika")
     @Expose
     private String typUzytkownika;
@@ -31,11 +30,11 @@ public class Uzytkownik {
     @Expose
     private String haslo;
 
-    public Integer getIdUzytkownika() {
+    public Long getIdUzytkownika() {
         return idUzytkownika;
     }
 
-    public void setIdUzytkownika(Integer idUzytkownika) {
+    public void setIdUzytkownika(Long idUzytkownika) {
         this.idUzytkownika = idUzytkownika;
     }
 

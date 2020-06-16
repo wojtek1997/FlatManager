@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#d43c3c"
+    tools:context=".AnnouncementActivity">
+
+    <TextView
+        android:id="@+id/tvAnnounceDescription"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:text="Treść Problemu"/>
+
+    <TextView
+        android:id="@+id/tvAnnounceDate"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/tvAnnounceDescription"
+        android:text="Treść Problemu"/>
+
+
+
+    <Button
+        android:id="@+id/btnBackFromAnnouncement"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentBottom="true"
+        android:text="Wroć" />
+
+
+</RelativeLayout>

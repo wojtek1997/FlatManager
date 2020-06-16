@@ -1,6 +1,6 @@
 package pl.minder.flatmanager.GlobalData;
 
-public class NewUser {
+public class UserData {
 
     public static Long idUser;
 

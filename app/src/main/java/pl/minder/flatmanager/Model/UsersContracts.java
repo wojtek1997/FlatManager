@@ -1,34 +1,33 @@
-
 package pl.minder.flatmanager.Model;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class UzytkownicyUmowy {
+public class UsersContracts {
 
     @SerializedName("idUzytkownicyUmowy")
     @Expose
-    private Integer idUzytkownicyUmowy;
+    private Long idUzytkownicyUmowy;
     @SerializedName("umowa")
     @Expose
-    private Umowa umowa;
+    private Contract umowa;
     @SerializedName("uzytkownik")
     @Expose
     private User uzytkownik;
 
-    public Integer getIdUzytkownicyUmowy() {
+    public Long getIdUzytkownicyUmowy() {
         return idUzytkownicyUmowy;
     }
 
-    public void setIdUzytkownicyUmowy(Integer idUzytkownicyUmowy) {
+    public void setIdUzytkownicyUmowy(Long idUzytkownicyUmowy) {
         this.idUzytkownicyUmowy = idUzytkownicyUmowy;
     }
 
-    public Umowa getUmowa() {
+    public Contract getUmowa() {
         return umowa;
     }
 
-    public void setUmowa(Umowa umowa) {
+    public void setUmowa(Contract umowa) {
         this.umowa = umowa;
     }
 
@@ -39,5 +38,4 @@ public class UzytkownicyUmowy {
     public void setUzytkownik(User uzytkownik) {
         this.uzytkownik = uzytkownik;
     }
-
 }
