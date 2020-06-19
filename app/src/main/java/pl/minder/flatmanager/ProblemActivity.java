@@ -56,7 +56,7 @@ public class ProblemActivity extends AppCompatActivity implements View.OnClickLi
             String month = String.valueOf(date2.getMonth() + 1);
             String year = String.valueOf(date2.getYear());
             year = year.substring(year.length()-2);
-            date = day + "/" + month + "/" + year;
+            date = month + "/" + day + "/" + year;
             Log.e("DAta : ", date);
 
             String description = edProblem.getText().toString();

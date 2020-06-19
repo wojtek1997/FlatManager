@@ -4,7 +4,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
-import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
 import java.util.ArrayList;
@@ -15,6 +14,7 @@ import io.reactivex.Observer;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
+import pl.minder.flatmanager.Adapters.BillsLVAdapter;
 import pl.minder.flatmanager.ClientApi.ClientApi;
 import pl.minder.flatmanager.ClientApi.InterfaceApi;
 import pl.minder.flatmanager.GlobalData.UserData;
@@ -27,13 +27,13 @@ public class BillsActivity extends AppCompatActivity implements View.OnClickList
 
     ListView lvBills;
 
-    ArrayList<String> bills;
+    List<String> billsDescription;
+    List<String> billsAmount;
+    List<String> billsSensor;
 
-    ArrayAdapter arrayAdapter;
+    Integer billImageId = (R.drawable.bill);
 
-    /*TextView tvDescription;
-    TextView tvAmount;
-    TextView tvBillSensor;*/
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,20 +43,22 @@ public class BillsActivity extends AppCompatActivity implements View.OnClickList
         findViewById(R.id.btnBack).setOnClickListener(this);
         findViewById(R.id.btnRefresh).setOnClickListener(this);
 
-        /*tvDescription = findViewById(R.id.tvDescription1);
-        tvAmount = findViewById(R.id.tvAmount1);
-        tvBillSensor = findViewById(R.id.tvBillSensor1);*/
+
 
         lvBills = findViewById(R.id.lvBills);
+
+        billsDescription = new ArrayList<>();
+        billsAmount = new ArrayList<>();
+        billsSensor = new ArrayList<>();
+
+
+        BillsLVAdapter billsLVAdapter = new BillsLVAdapter(this, billsDescription, billsAmount, billsSensor,billImageId);
+        lvBills.setAdapter(billsLVAdapter);
 
         Retrofit retrofit = ClientApi.getInstance();
         interfaceApi = retrofit.create(InterfaceApi.class);
 
-        bills = new ArrayList<>();
 
-        arrayAdapter = new ArrayAdapter(this, android.R.layout.simple_list_item_1, bills);
-
-        lvBills.setAdapter(arrayAdapter);
 
     }
 
@@ -70,16 +72,16 @@ public class BillsActivity extends AppCompatActivity implements View.OnClickList
             startActivity(intent);
         }else if(i == R.id.btnRefresh){
 
-            getBills(UserData.idUser, bills);
-            arrayAdapter = new ArrayAdapter(this, android.R.layout.simple_list_item_1, bills);
-            lvBills.setAdapter(arrayAdapter);
+            getBills(UserData.idUser, billsDescription, billsAmount, billsSensor);
+            BillsLVAdapter billsLVAdapter = new BillsLVAdapter(this, billsDescription, billsAmount, billsSensor,billImageId);
+            lvBills.setAdapter(billsLVAdapter);
             //bills = new ArrayList<>();
         }
 
     }
 
 
-    private void getBills (Long idUser, final ArrayList<String> bills){
+    private void getBills (Long idUser, final List<String> billsDescription, final List<String> billsAmount, final List<String> billsSensor){
         interfaceApi.getBillsForUser(idUser)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
@@ -93,26 +95,24 @@ public class BillsActivity extends AppCompatActivity implements View.OnClickList
                                @Override
                                public void onNext(List<UsersBills> usersBills) {
 
-                                   bills.clear();
+                                   billsDescription.clear();
+                                   billsAmount.clear();
+                                   billsSensor.clear();
 
                                    for(int i=0; i<usersBills.size(); i++) {
-                                       String Sensor;
-                                       boolean SenseorBill = usersBills.get(i).getRachunek().getCzyRozlicznoy();
+                                       boolean SenseorBill = usersBills.get(i).getCzyRozlicznoy();
 
                                        if (SenseorBill == true) {
-                                           Sensor = "Rachunek rozliczony";
+                                           billsSensor.add("Rachunek rozliczony");
                                        } else {
-                                           Sensor = "Rachunek nierozliczony!";
+                                           billsSensor.add("Rachunek nierozliczony!");
                                        }
 
 
-                                       String description = usersBills.get(i).getRachunek().getOpis();
-                                       String amount = usersBills.get(i).getRachunek().getKwota().toString();
-
-                                       String bill = "OPIS: " + description + "\n" + "KWOTA: " + amount + "zł \n" + "    " + Sensor;
+                                       billsDescription.add(usersBills.get(i).getRachunek().getOpis());
+                                       billsAmount.add(usersBills.get(i).getRachunek().getKwota().toString() + "zł");
 
 
-                                       bills.add(bill);
                                    }
                                }
 

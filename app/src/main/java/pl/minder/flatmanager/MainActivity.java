@@ -5,7 +5,6 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
-import android.widget.TextView;
 
 import java.util.List;
 
@@ -24,12 +23,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     InterfaceApi interfaceApi;
 
-    TextView tvCity;
-    TextView tvStreet;
-    TextView tvHouse;
-    TextView tvFlat;
-    TextView tvArea;
-    TextView tvRoomsNr;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,12 +36,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         findViewById(R.id.btnContract).setOnClickListener(this);
         findViewById(R.id.btnAnnouncement).setOnClickListener(this);
 
-        tvCity = findViewById(R.id.tvCity);
-        tvStreet = findViewById(R.id.tvStreet);
-        tvHouse = findViewById(R.id.tvHouse);
-        tvFlat = findViewById(R.id.tvFlat);
-        tvArea = findViewById(R.id.tvArea);
-        tvRoomsNr = findViewById(R.id.tvRoomsNr);
 
 
 
@@ -56,22 +43,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         interfaceApi = retrofit.create(InterfaceApi.class);
     }
 
-    protected void onStart () {
-        super.onStart();
-
-        if(FlatData.city != null)
-            tvCity.setText(FlatData.city);
-        if(FlatData.street != null)
-            tvStreet.setText(FlatData.street);
-        if(FlatData.houseNr != null)
-            tvHouse.setText(FlatData.houseNr.toString());
-        if(FlatData.flatNr != null)
-            tvFlat.setText(FlatData.flatNr.toString());
-        if(FlatData.flatArea != null)
-            tvArea.setText(FlatData.flatArea.toString());
-        if(FlatData.roomsNr != null)
-            tvRoomsNr.setText(FlatData.roomsNr.toString());
-    }
 
     @Override
     public void onClick(View view) {

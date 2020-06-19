@@ -14,6 +14,9 @@ public class UsersBills {
     @SerializedName("uzytkownicyR")
     @Expose
     private User uzytkownicyR;
+    @SerializedName("czyRozlicznoy")
+    @Expose
+    private Boolean czyRozlicznoy;
 
     public Long getIdUzytkownicyRachunki() {
         return idUzytkownicyRachunki;
@@ -37,5 +40,13 @@ public class UsersBills {
 
     public void setUzytkownicyR(User uzytkownicyR) {
         this.uzytkownicyR = uzytkownicyR;
+    }
+
+    public Boolean getCzyRozlicznoy() {
+        return czyRozlicznoy;
+    }
+
+    public void setCzyRozlicznoy(Boolean czyRozlicznoy) {
+        this.czyRozlicznoy = czyRozlicznoy;
     }
 }

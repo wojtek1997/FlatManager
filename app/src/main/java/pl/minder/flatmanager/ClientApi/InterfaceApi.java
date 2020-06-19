@@ -3,10 +3,10 @@ package pl.minder.flatmanager.ClientApi;
 import java.util.List;
 
 import io.reactivex.Observable;
+import pl.minder.flatmanager.Model.Event;
 import pl.minder.flatmanager.Model.User;
 import pl.minder.flatmanager.Model.UsersBills;
 import pl.minder.flatmanager.Model.UsersContracts;
-import pl.minder.flatmanager.Model.UsersEvents;
 import pl.minder.flatmanager.Model.UsersFlats;
 import retrofit2.Call;
 import retrofit2.http.Body;
@@ -38,8 +38,8 @@ public interface InterfaceApi {
     @GET("contractsusersid")
     Observable<List<UsersContracts>> getContractForUser(@Query("idUzytkownika") Long idUser);
 
-    @GET("eventflatsid")
-    Observable<List<UsersEvents>> getAnnouncement(@Query("idMieszkania") Long idFlat);
+    @GET("annonce")
+    Observable<List<Event>> getAnnouncement(@Query("idMieszkania") Long idFlat);
 
     /*
     Post

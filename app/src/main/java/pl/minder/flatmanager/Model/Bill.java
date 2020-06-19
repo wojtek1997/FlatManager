@@ -14,9 +14,7 @@ public class Bill {
     @SerializedName("kwota")
     @Expose
     private Double kwota;
-    @SerializedName("czyRozlicznoy")
-    @Expose
-    private Boolean czyRozlicznoy;
+
 
     public Long getIdRachunku() {
         return idRachunku;
@@ -42,11 +40,4 @@ public class Bill {
         this.kwota = kwota;
     }
 
-    public Boolean getCzyRozlicznoy() {
-        return czyRozlicznoy;
-    }
-
-    public void setCzyRozlicznoy(Boolean czyRozlicznoy) {
-        this.czyRozlicznoy = czyRozlicznoy;
-    }
 }

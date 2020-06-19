@@ -4,8 +4,9 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
-import android.widget.TextView;
+import android.widget.ListView;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -13,18 +14,22 @@ import io.reactivex.Observer;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
+import pl.minder.flatmanager.Adapters.AnnounceLVAdapter;
 import pl.minder.flatmanager.ClientApi.ClientApi;
 import pl.minder.flatmanager.ClientApi.InterfaceApi;
 import pl.minder.flatmanager.GlobalData.FlatData;
-import pl.minder.flatmanager.Model.UsersEvents;
+import pl.minder.flatmanager.Model.Event;
 import retrofit2.Retrofit;
 
 public class AnnouncementActivity extends AppCompatActivity implements View.OnClickListener{
 
     InterfaceApi interfaceApi;
 
-    TextView tvAnnouncement;
-    TextView tvDate;
+    ListView lvAnnounce;
+
+    List<String> announceDescription;
+    List<String> announceDate;
+    Integer announceImageId = (R.drawable.announce);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,19 +37,18 @@ public class AnnouncementActivity extends AppCompatActivity implements View.OnCl
         setContentView(R.layout.activity_announcement);
 
         findViewById(R.id.btnBackFromAnnouncement).setOnClickListener(this);
+        findViewById(R.id.btnRefreshAnnounce).setOnClickListener(this);
 
-        tvAnnouncement = findViewById(R.id.tvAnnounceDescription);
-        tvDate = findViewById(R.id.tvAnnounceDate);
+        lvAnnounce = findViewById(R.id.lvAnnounce);
+
+        announceDescription = new ArrayList<>();
+        announceDate = new ArrayList<>();
 
         Retrofit retrofit = ClientApi.getInstance();
         interfaceApi = retrofit.create(InterfaceApi.class);
     }
 
-    @Override
-    protected void onStart() {
-        super.onStart();
-        getAnnouncement(FlatData.idFlat);
-    }
+
 
     @Override
     public void onClick(View view) {
@@ -54,25 +58,39 @@ public class AnnouncementActivity extends AppCompatActivity implements View.OnCl
 
             Intent intent = new Intent(AnnouncementActivity.this, MainActivity.class);
             startActivity(intent);
+
+        }else if(i == R.id.btnRefreshAnnounce){
+            getAnnouncement(FlatData.idFlat, announceDescription, announceDate);
+            AnnounceLVAdapter announcesLVAdapter = new AnnounceLVAdapter(this, announceDescription, announceDate, announceImageId);
+            lvAnnounce.setAdapter(announcesLVAdapter);
         }
 
     }
 
-    private void getAnnouncement(Long idFlat){
+    private void getAnnouncement(Long idFlat, final List<String> announceDescription, final List<String> announceDate){
 
         interfaceApi.getAnnouncement(idFlat)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Observer<List<UsersEvents>>() {
+                .subscribe(new Observer<List<Event>>() {
                     @Override
                     public void onSubscribe(Disposable d) {
+
 
                     }
 
                     @Override
-                    public void onNext(List<UsersEvents> usersEvents) {
-                        tvAnnouncement.setText(usersEvents.get(0).getZdarzenie().getOpis());
-                        tvDate.setText(usersEvents.get(0).getZdarzenie().getDataZgloszenia());
+                    public void onNext(List<Event> events) {
+
+                        announceDescription.clear();
+                        announceDate.clear();
+
+                        for(int i=0; i<events.size(); i++) {
+
+                            announceDescription.add(events.get(i).getOpis());
+                            announceDate.add(events.get(i).getDataZgloszenia());
+
+                        }
                     }
 
                     @Override
