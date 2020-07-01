@@ -54,10 +54,20 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
         if (i == R.id.btnLogin) {
 
-            String login = edLogin.getText().toString();
-            String password = edPassword.getText().toString();
+            if(edLogin.getText().toString().equals("")){
+                Toast.makeText(getApplicationContext(), "Wszystkie pola nie zostały uzupełnione!", Toast.LENGTH_LONG).show();
+            }else{
+                if(edPassword.getText().toString().equals("")){
+                    Toast.makeText(getApplicationContext(), "Wszystkie pola nie zostały uzupełnione!", Toast.LENGTH_LONG).show();
+                }else{
+                    String login = edLogin.getText().toString();
+                    String password = edPassword.getText().toString();
 
-            getLoginAndPassword(login, password);
+                    getLoginAndPassword(login, password);
+                }
+            }
+
+
         }else if(i == R.id.btnRegister) {
 
             Intent intent = new Intent(LoginActivity.this, RegisterActivity.class);
@@ -69,39 +79,6 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
 
 
-   /* private void getUser(final String login) {
-
-        compositeDisposable.add(interfaceApi.getUserByLogin(login)
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Consumer<User>() {
-                    @Override
-                    public void accept(User user) throws Exception {
-                        User user1 = user;
-                        UserData.idUser = user1.getIdUzytkownika();
-                        UserData.type = user1.getTypUzytkownika();
-                        UserData.firstName = user1.getImie();
-                        UserData.lastName = user1.getNazwisko();
-                        UserData.telefonNumber = user1.getNrTelefonu();
-                        UserData.emailAdress = user1.getAdresEmail();
-                        UserData.login = user1.getLogin();
-                        UserData.password = user1.getHaslo();
-
-
-                        Log.e("userid: ", UserData.idUser.toString() + "\n type: " + UserData.type + "\n firstname: " + UserData.firstName + "\n lastname: " + UserData.lastName + "\n telefonnumber: " + UserData.telefonNumber.toString() + "\n emailadress: " + UserData.emailAdress + "\n login: " + UserData.login + "\n password: " + UserData.password);
-
-                        Intent intent = new Intent(LoginActivity.this, MainActivity.class);
-                        startActivity(intent);
-
-
-
-
-                    }
-
-                })
-        );
-
-    }*/
 
     private void getLoginAndPassword(final String login, final String passsword) {
 
@@ -131,6 +108,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
                         if(loginTrue == true){
                             passwordFromServer = users.get(index).getHaslo();
+                            passwordFromServer = DecodePassword(passwordFromServer);
                             if(passwordFromServer.equals(passsword)){
                                 UserData.idUser = users.get(index).getIdUzytkownika();
                                 UserData.type = users.get(index).getTypUzytkownika();
@@ -205,9 +183,15 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         );
     }
 
-    /*@Override
-    protected void onStop(){
-        compositeDisposable.clear();
-        super.onStop();
-    }*/
+    public static String DecodePassword(String password) {
+        String result = "";
+        char d;
+        for(int i = 0; i < password.length(); i++) {
+            d = password.charAt(i);
+            d -= 7 ;
+            result += d;
+        }
+
+        return result;
+    }
 }

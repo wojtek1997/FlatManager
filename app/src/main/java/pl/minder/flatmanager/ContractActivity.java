@@ -87,15 +87,15 @@ public class ContractActivity extends AppCompatActivity implements View.OnClickL
 
                     @Override
                     public void onNext(List<UsersContracts> usersContracts) {
-                        tvConclusionDate.setText(usersContracts.get(0).getUmowa().getDataZawarcia());
-                        tvExpirationDate.setText(usersContracts.get(0).getUmowa().getDataZakonczenia());
-                        tvRent.setText(usersContracts.get(0).getUmowa().getCzynsz().toString());
-                        tvDeposit.setText(usersContracts.get(0).getUmowa().getKaucja().toString());
-                        tvNoticePeriod.setText(usersContracts.get(0).getUmowa().getOkresWypowiedzenia().toString());
-                        tvFlatCity.setText(usersContracts.get(0).getUmowa().getMieszkanie().getMiasto());
-                        tvFlatStreet.setText(usersContracts.get(0).getUmowa().getMieszkanie().getUlica());
-                        tvFlatHouseNr.setText(usersContracts.get(0).getUmowa().getMieszkanie().getNrDomu().toString());
-                        tvFlatFlatNr.setText(usersContracts.get(0).getUmowa().getMieszkanie().getNrMieszkania().toString());
+                        tvConclusionDate.setText("Data zawarcia: " + usersContracts.get(0).getUmowa().getDataZawarcia());
+                        tvExpirationDate.setText("Data wygaśnięcia: " + usersContracts.get(0).getUmowa().getDataZakonczenia());
+                        tvRent.setText("Wysokość czynszu: " + usersContracts.get(0).getUmowa().getCzynsz().toString() + "zł");
+                        tvDeposit.setText("Wysokość kaucji: " + usersContracts.get(0).getUmowa().getKaucja().toString() + "zł");
+                        tvNoticePeriod.setText("Okres wypowiedzenia: " + usersContracts.get(0).getUmowa().getOkresWypowiedzenia().toString() + "mies.");
+                        tvFlatCity.setText("Miasto: " + usersContracts.get(0).getUmowa().getMieszkanie().getMiasto());
+                        tvFlatStreet.setText("Ulica: " + usersContracts.get(0).getUmowa().getMieszkanie().getUlica());
+                        tvFlatHouseNr.setText("Numer domu: " + usersContracts.get(0).getUmowa().getMieszkanie().getNrDomu().toString());
+                        tvFlatFlatNr.setText("Numer mieszkania: " + usersContracts.get(0).getUmowa().getMieszkanie().getNrMieszkania().toString());
 
                     }
 

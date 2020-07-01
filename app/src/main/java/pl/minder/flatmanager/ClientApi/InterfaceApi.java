@@ -38,7 +38,7 @@ public interface InterfaceApi {
     @GET("contractsusersid")
     Observable<List<UsersContracts>> getContractForUser(@Query("idUzytkownika") Long idUser);
 
-    @GET("annonce")
+    @GET("announce")
     Observable<List<Event>> getAnnouncement(@Query("idMieszkania") Long idFlat);
 
     /*

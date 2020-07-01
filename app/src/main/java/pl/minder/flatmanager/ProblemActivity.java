@@ -44,28 +44,33 @@ public class ProblemActivity extends AppCompatActivity implements View.OnClickLi
 
         if (i == R.id.btnSendProblem) {
 
-            String type = "problem";
-            String date = "";
+           if(edProblem.getText().toString().equals("")){
+               Toast.makeText(getApplicationContext(), "Pole z treścią pozostało puste!", Toast.LENGTH_LONG).show();
+           }else{
+               String type = "problem";
+               String date = "";
 
-            long timestamp = System.currentTimeMillis(); //pobiera czas jako timestamp
-            Date date2 = new Date(timestamp); // tworzy obiekt daty na podstawie timestamp
-            GregorianCalendar calendar = new GregorianCalendar();
-            calendar.setTime(date2); //ustawia datę timestampu do kalendarza
+               long timestamp = System.currentTimeMillis(); //pobiera czas jako timestamp
+               Date date2 = new Date(timestamp); // tworzy obiekt daty na podstawie timestamp
+               GregorianCalendar calendar = new GregorianCalendar();
+               calendar.setTime(date2); //ustawia datę timestampu do kalendarza
 
-            String day = String.valueOf(date2.getDay());
-            String month = String.valueOf(date2.getMonth() + 1);
-            String year = String.valueOf(date2.getYear());
-            year = year.substring(year.length()-2);
-            date = month + "/" + day + "/" + year;
-            Log.e("DAta : ", date);
+               String day = String.valueOf(date2.getDay());
+               String month = String.valueOf(date2.getMonth() + 1);
+               String year = String.valueOf(date2.getYear());
+               year = year.substring(year.length()-2);
+               date = month + "/" + day + "/" + year;
+               Log.e("DAta : ", date);
 
-            String description = edProblem.getText().toString();
+               String description = edProblem.getText().toString();
 
-            addProblem(type, date, description, FlatData.idFlat);
+               addProblem(type, date, description, FlatData.idFlat);
 
 
-            Intent intent = new Intent(ProblemActivity.this, MainActivity.class);
-            startActivity(intent);
+               Intent intent = new Intent(ProblemActivity.this, MainActivity.class);
+               startActivity(intent);
+           }
+
         }
 
     }

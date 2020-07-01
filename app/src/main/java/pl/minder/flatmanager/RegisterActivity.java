@@ -50,18 +50,47 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
         int i = view.getId();
 
         if (i == R.id.btnNewRegister) {
-            User user = new User();
 
-            user.setTypUzytkownika("lokator");
-            user.setImie(edFirstName.getText().toString());
-            user.setNazwisko(edLastName.getText().toString());
-            user.setNrTelefonu(Integer.parseInt(edPhoneNr.getText().toString()));
-            user.setAdresEmail(edEmail.getText().toString());
-            user.setLogin(edLogin.getText().toString());
-            user.setHaslo(edPassword.getText().toString());
+            if(edFirstName.getText().toString().equals("")){
+                Toast.makeText(getApplicationContext(), "Wszystkie pola nie zostały uzupełnione!", Toast.LENGTH_LONG).show();
+            }else{
+                if(edLastName.getText().toString().equals("")){
+                    Toast.makeText(getApplicationContext(), "Wszystkie pola nie zostały uzupełnione!", Toast.LENGTH_LONG).show();
+                }else{
+                    if(edPhoneNr.getText().toString().equals("")){
+                        Toast.makeText(getApplicationContext(), "Wszystkie pola nie zostały uzupełnione!", Toast.LENGTH_LONG).show();
+                    }else{
+                        if(edEmail.getText().toString().equals("")){
+                            Toast.makeText(getApplicationContext(), "Wszystkie pola nie zostały uzupełnione!", Toast.LENGTH_LONG).show();
+                        }else{
+                            if(edLogin.getText().toString().equals("")){
+                                Toast.makeText(getApplicationContext(), "Wszystkie pola nie zostały uzupełnione!", Toast.LENGTH_LONG).show();
+                            }else{
+                                if(edPassword.getText().toString().equals("")){
+                                    Toast.makeText(getApplicationContext(), "Wszystkie pola nie zostały uzupełnione!", Toast.LENGTH_LONG).show();
+                                }else{
+                                    User user = new User();
 
-            addUser(user);
+                                    String newPassword = EncodePassword(edPassword.getText().toString());
+
+                                    user.setTypUzytkownika("lokator");
+                                    user.setImie(edFirstName.getText().toString());
+                                    user.setNazwisko(edLastName.getText().toString());
+                                    user.setNrTelefonu(Integer.parseInt(edPhoneNr.getText().toString()));
+                                    user.setAdresEmail(edEmail.getText().toString());
+                                    user.setLogin(edLogin.getText().toString());
+                                    user.setHaslo(newPassword);
+
+                                    addUser(user);
+                                }
+                            }
+                        }
+                    }
+                }
+            }
         }
+
+
 
     }
 
@@ -83,7 +112,7 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
 
             @Override
             public void onFailure(Call<User> call, Throwable t) {
-                Toast.makeText(getApplicationContext(), "Konto zostało pomyślnie utworzone 123!", Toast.LENGTH_LONG).show();
+                Toast.makeText(getApplicationContext(), "Konto zostało pomyślnie utworzone!", Toast.LENGTH_LONG).show();
                 call.cancel();
 
 
@@ -95,5 +124,19 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
         });
 
 
+
+
+    }
+
+    private String EncodePassword(String password) {
+        String result = "";
+        char d;
+        for(int i = 0; i < password.length(); i++) {
+            d = password.charAt(i);
+            d += 7;
+            result += d;
+        }
+
+        return result;
     }
 }
